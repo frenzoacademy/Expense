@@ -1,4 +1,4 @@
-package com.expenses.ExpenseTracker.company;
+package com.fz.ExpenseTracker.company;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,19 +28,19 @@ public class CompanyController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Company> getCompanyById(@PathVariable("id") Long id) {
+	public ResponseEntity<Company> getCompanyById(@PathVariable("id") int id) {
 		Company company = companyService.getCompanyById(id);
 		return new ResponseEntity<Company>(company, new HttpHeaders(), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Company> updateCompany(@PathVariable Long id, @RequestBody Company company) {
+	public ResponseEntity<Company> updateCompany(@PathVariable int id, @RequestBody Company company) {
 		Company updatedCompany = companyService.updateCompany(id, company);
 		return new ResponseEntity<Company>(updatedCompany, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")
-	public HttpStatus deleteCompany(@PathVariable Long id) throws CompanyNotFoundException {
+	public HttpStatus deleteCompany(@PathVariable int id) throws CompanyNotFoundException {
 		companyService.deleteCompany(id);
 		return HttpStatus.OK;
 	}
