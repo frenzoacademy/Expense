@@ -6,9 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.expense.ExpenseManage.model.RoleNotFoundException;
-import com.expense.ExpenseManage.model.Roles;
-import com.expense.ExpenseManage.repository.RolesRepository;
 
 @Service
 public class RolesService {

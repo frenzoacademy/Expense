@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fz.expenses.ExpenseTracker.category.CategoryNotFoundException;
 
 @Service
 public class AccountCategoryService {
@@ -34,7 +33,7 @@ public class AccountCategoryService {
 	}
 
 	public Account_Category updateAccountCategory(int id, Account_Category accountCategory) {
-		Optional<Account_Category> acoc = accountcategoryrepository.findById(accountCategory.getId());
+		Optional<Account_Category> acoc = accountcategoryrepository.findById(id);
 		if (acoc.isPresent()) {
 			Account_Category aco = acoc.get();
 			if (accountCategory.getName() != null) {

@@ -31,7 +31,7 @@ public class CompanyService {
 	}
 
 	public Company updateCompany(int id, Company company) {
-		Optional<Company> com = companyrepository.findById(company.getId());
+		Optional<Company> com = companyrepository.findById(id);
 		if (com.isPresent()) {
 			Company comp = com.get();
 			if (company.getName() != null) {

@@ -36,7 +36,7 @@ public class ProductService {
 	}
 
 	public Product updateProduct(int id, Product product) {
-		Optional<Product> prod = productrepository.findById(product.getId());
+		Optional<Product> prod = productrepository.findById(id);
 		if (prod.isPresent()) {
 			Product pro = prod.get();
 			if (product.getName() != null) {
@@ -50,7 +50,10 @@ public class ProductService {
 	}
 	
 	public void deleteProduct(int id) {
-
+		Optional<Product> pro=productrepository.findById(id);
+		if(pro.isPresent()) {
+			productrepository.deleteById(id);
+		}
 	}
 
 }
