@@ -1,4 +1,4 @@
-package com.fz.ExpenseTracker.Account_Category;
+package com.fz.ExpenseTracker.Account_Type;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-public class Account_Category {
+public class Account_Type {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_category_generator")
 	@SequenceGenerator(name = "account_category_generator")
@@ -17,13 +17,13 @@ public class Account_Category {
 	@Column(name = "")
 	private String name;
 
-	public Account_Category(int id, String name) {
+	public Account_Type(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 
-	public Account_Category() {
+	public Account_Type() {
 		super();
 	}
 

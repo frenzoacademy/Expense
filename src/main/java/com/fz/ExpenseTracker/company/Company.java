@@ -1,10 +1,13 @@
 package com.fz.ExpenseTracker.company;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -27,7 +30,8 @@ public class Company {
     private String phoneNumber;
     @Column(name="address")
     private String address;
-    @Column(name="currency")
+//    @OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "currency")
     private String currency;
     
     // Constructors
