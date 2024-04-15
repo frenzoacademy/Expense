@@ -2,6 +2,8 @@ package com.fz.ExpenseTracker.service;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fz.ExpenseTracker.category.Category;
 
 import jakarta.persistence.CascadeType;
@@ -10,19 +12,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Services {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="category_id")
-	private Category category;
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
+	
 	
 	public Services() {
 		super();
@@ -49,6 +54,10 @@ public class Services {
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	@Override
+	public String toString() {
+		return "Services [id=" + id + ", name=" + name + ", category=" + category + "]";
 	}
 	
 	

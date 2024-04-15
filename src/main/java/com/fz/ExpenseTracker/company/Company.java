@@ -1,4 +1,4 @@
-package com.expenses.ExpenseTracker.company;
+package com.fz.ExpenseTracker.company;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,8 +10,7 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class Company {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
-    @SequenceGenerator(name = "product_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
     private int id;
     
