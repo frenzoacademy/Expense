@@ -28,22 +28,22 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        productService.addProduct(product);
+        productService.createProduct(product);
         return new ResponseEntity<Product>(new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> products = productService.getProducts();
-        return new ResponseEntity<List<Product>>(products, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
+        List<ProductResponseDTO> products = productService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") int id) {
-        Product product = productService.getProductById(id);
-        return new ResponseEntity<Product>(product, new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable int id) throws ProductNotFoundException {
+        ProductResponseDTO product = productService.getProductById(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product product) {
         Product p=productService.updateProduct(id, product);

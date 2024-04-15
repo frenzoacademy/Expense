@@ -1,14 +1,23 @@
 package com.fz.ExpenseTracker.product;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fz.ExpenseTracker.category.Category;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-public class Product {
+public class Product implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
@@ -19,8 +28,32 @@ public class Product {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "category")
-	private String category;
+//	@JsonIgnore
+	private int category;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+//	@JsonIgnoreProperties({ "services", "expenses" })
+	@JoinColumn(name = "category_id")
+	private Category categoryEntity;
+
+	public Product() {
+		super();
+	}
+
+	public Category getCategoryEntity() {
+		return categoryEntity;
+	}
+
+	public void setCategoryEntity(Category categoryEntity) {
+		this.categoryEntity = categoryEntity;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
+	}
+	public int getCategory() {
+		return category;
+	}
 
 	public int getId() {
 		return id;
@@ -38,24 +71,10 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public Product(int id, String name, String category) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.category = category;
-	}
-
-	public Product() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", categoryEntity=" + categoryEntity
+				+ "]";
 	}
 
 }

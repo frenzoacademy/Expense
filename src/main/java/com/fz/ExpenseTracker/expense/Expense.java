@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fz.ExpenseTracker.category.Category;
 
@@ -29,19 +30,16 @@ public class Expense implements Serializable{
 	private String paid_account;
 	private String reference;
 	private String description;
+	@JsonIgnore
+    private int category; 
 
-	
-    private int category; // Keep category as an int for JSON mapping
-
-	@ManyToOne(fetch = FetchType.EAGER) // Lazy fetch to prevent unnecessary loading
+	@ManyToOne(fetch = FetchType.EAGER) 
     @JsonIgnoreProperties({"services", "expenses"})
 	@JoinColumn(name = "category_id") 
 	private Category categoryEntity;
 
 	public Category getCategoryEntity() {
-        Category category = new Category();
-        category.setId(category.getId());
-        return category;
+        return categoryEntity;
     }
 	
 	

@@ -10,16 +10,14 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class Roles {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roles_generator")
-	@SequenceGenerator(name = "roles_generator", sequenceName = "roles_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	//staff ,owner oe admin
 	@Column(name="role")
 	private String roles;
+	
 	public Roles() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Roles(int id, String roles) {

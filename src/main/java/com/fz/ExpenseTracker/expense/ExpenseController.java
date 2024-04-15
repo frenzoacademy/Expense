@@ -34,7 +34,7 @@ public class ExpenseController {
 	    }
 
 	    @GetMapping("/{id}")
-	    public ResponseEntity<Expense> getExpenseById(@PathVariable int id) {
+	    public ResponseEntity<Expense> getExpenseById(@PathVariable int id) throws ExpenseNotFoundException {
 	        Expense expense = expenseService.getExpenseById(id);
 	        if (expense != null) {
 	            return new ResponseEntity<>(expense, HttpStatus.OK);
@@ -61,10 +61,10 @@ public class ExpenseController {
 		}
 
 	    @DeleteMapping("/{id}")
-	    public ResponseEntity<Void> deleteExpense(@PathVariable int id) {
+	    public ResponseEntity<HttpStatus> deleteExpense(@PathVariable int id) {
 	        boolean deleted = expenseService.deleteExpense(id);
 	        if (deleted) {
-	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	            return new ResponseEntity<>(HttpStatus.OK);
 	        } else {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }

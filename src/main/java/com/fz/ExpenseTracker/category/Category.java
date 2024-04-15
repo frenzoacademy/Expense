@@ -3,6 +3,7 @@ package com.fz.ExpenseTracker.category;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fz.ExpenseTracker.expense.Expense;
 import com.fz.ExpenseTracker.service.Services;
@@ -21,9 +22,11 @@ public class Category {
 	private int id;
 	private String name;
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@JsonIgnore
     private List<Services> services;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category", orphanRemoval = true)
+	@JsonIgnore
 	private List<Expense> expenses;
 
 	
@@ -77,7 +80,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", services=" + services + "]";
+		return "Category [id=" + id + ", name=" + name ;
 	}
 
 }
