@@ -1,5 +1,6 @@
 package com.fz.ExpenseTracker.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,17 +19,28 @@ public class ServiceService {
 	CategoryRepository categoryRepository;
 
 	public Services createService(Services service) {
-	    Category existingCategory = categoryRepository.findByName(service.getCategory().getName());
-	    if (existingCategory != null) {
-	        service.setCategory(existingCategory);
+	    Optional<Category> existingCategory =categoryRepository.findByName(service.getCategory().getName());
+	    if(existingCategory.isPresent()) {
+	    	Category category=existingCategory.get();
+	    	service.setCategory(category);
 	    }
 	    return serviceRepository.save(service);
 	}
 
+		public List<ServiceDTO> getAllServices() {
+	        List<Services> servicesList = serviceRepository.findAll();
+	        List<ServiceDTO> serviceDTOList = new ArrayList<>();
 
-	public List<Services> getAllServices() {
-		return serviceRepository.findAll();
-	}
+	        for (Services service : servicesList) {
+	            ServiceDTO serviceDTO = new ServiceDTO();
+	            serviceDTO.setId(service.getId());
+	            serviceDTO.setName(service.getName());
+	            serviceDTO.setCategoryName(service.getCategory().getName()); 
+	            serviceDTOList.add(serviceDTO);
+	        }
+
+	        return serviceDTOList;
+	    }
 
 	public Optional<Services> getServiceById(int id) {
 		return serviceRepository.findById(id);

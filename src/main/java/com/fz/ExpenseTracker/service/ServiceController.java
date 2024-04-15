@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/services")
 public class ServiceController {
@@ -22,16 +23,17 @@ public class ServiceController {
 	ServiceService services;
 
 	@PostMapping
-	public ResponseEntity<Services> createService(@RequestBody Services service) {
+	public ResponseEntity<String> createService(@RequestBody Services service) {
 		Services createdService = services.createService(service);
-		return ResponseEntity.status(HttpStatus.CREATED).body(createdService);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Services created successfully");
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Services>> getAllServices() {
-		List<Services> serviceList = services.getAllServices();
-		return ResponseEntity.ok(serviceList);
+	public ResponseEntity<List<ServiceDTO>> getAllServices() throws ServiceNotFoundException {
+	    List<ServiceDTO> serviceDTOList = services.getAllServices();
+	    return new ResponseEntity<>(serviceDTOList, HttpStatus.OK);
 	}
+
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Services> getServiceById(@PathVariable int id) {
@@ -50,8 +52,8 @@ public class ServiceController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteService(@PathVariable int id) {
+	public ResponseEntity<HttpStatus> deleteService(@PathVariable int id) {
 		services.deleteService(id);
-		return ResponseEntity.noContent().build();
+        return (ResponseEntity<HttpStatus>) ResponseEntity.status(HttpStatus.OK);
 	}
 }

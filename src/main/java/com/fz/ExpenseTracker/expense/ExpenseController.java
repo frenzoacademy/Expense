@@ -1,5 +1,6 @@
 package com.fz.ExpenseTracker.expense;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fz.ExpenseTracker.category.Category;
+import com.fz.ExpenseTracker.service.ServiceNotFoundException;
+import com.fz.ExpenseTracker.service.Services;
+
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/expenses")
@@ -35,22 +42,23 @@ public class ExpenseController {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
 	    }
-
+	    
 	    @PostMapping
-	    public ResponseEntity<Expense> addExpense(@RequestBody Expense expense) {
-	        Expense createdExpense = expenseService.addExpense(expense);
-	        return new ResponseEntity<>(createdExpense, HttpStatus.CREATED);
+	    @Transactional
+	    public ResponseEntity<?> createExpense(@RequestBody Expense expense) {
+	    	expenseService.createExpense(expense);
+	        return new ResponseEntity<>(HttpStatus.CREATED);
 	    }
 
 	    @PutMapping("/{id}")
-	    public ResponseEntity<Expense> updateExpense(@PathVariable int id, @RequestBody Expense expense) throws ExpenseNotFoundException {
-	        Expense updatedExpense = expenseService.updateExpense(id, expense);
-	        if (updatedExpense != null) {
-	            return new ResponseEntity<>(updatedExpense, HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	        }
-	    }
+		public ResponseEntity<Expense> updateExpense(@PathVariable int id, @RequestBody Expense expenses) throws ServiceNotFoundException, ExpenseNotFoundException {
+	    	Expense expense = expenseService.updateExpense(id, expenses);
+			if (expense != null) {
+				return ResponseEntity.ok(expense);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		}
 
 	    @DeleteMapping("/{id}")
 	    public ResponseEntity<Void> deleteExpense(@PathVariable int id) {
