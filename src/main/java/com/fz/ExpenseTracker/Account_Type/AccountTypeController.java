@@ -1,4 +1,4 @@
-package com.fz.ExpenseTracker.Account_Category;
+package com.fz.ExpenseTracker.Account_Type;
 
 import java.util.List;
 
@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account-categories")
-public class AccountCategoryController {
+public class AccountTypeController {
 	
 	@Autowired
-    AccountCategoryService accountCategoryService;
+    AccountTypeService accountCategoryService;
 
     @PostMapping
-    public ResponseEntity<Account_Category> addAccountCategory(@RequestBody Account_Category accountCategory) {
+    public ResponseEntity<Account_Type> addAccountCategory(@RequestBody Account_Type accountCategory) {
         accountCategoryService.addAccountCategory(accountCategory);
         return new ResponseEntity<>(new HttpHeaders(), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Account_Category>> getAccountCategories() {
-        List<Account_Category> accountCategories = accountCategoryService.getAccountCategories();
+    public ResponseEntity<List<Account_Type>> getAccountCategories() {
+        List<Account_Type> accountCategories = accountCategoryService.getAccountCategories();
         return new ResponseEntity<>(accountCategories, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account_Category> getAccountCategoryById(@PathVariable("id") int id) {
-        Account_Category accountCategory = accountCategoryService.getAccountCategoryById(id);
+    public ResponseEntity<Account_Type> getAccountCategoryById(@PathVariable("id") int id) {
+        Account_Type accountCategory = accountCategoryService.getAccountCategoryById(id);
         return new ResponseEntity<>(accountCategory, new HttpHeaders(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account_Category> updateAccountCategory(@PathVariable int id, @RequestBody Account_Category accountCategory) {
-        Account_Category updatedAccountCategory = accountCategoryService.updateAccountCategory(id, accountCategory);
+    public ResponseEntity<Account_Type> updateAccountCategory(@PathVariable int id, @RequestBody Account_Type accountCategory) {
+        Account_Type updatedAccountCategory = accountCategoryService.updateAccountCategory(id, accountCategory);
         return new ResponseEntity<>(updatedAccountCategory, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteAccountCategory(@PathVariable int id) throws AccountCategoryNotFoundException {
+    public HttpStatus deleteAccountCategory(@PathVariable int id) throws AccountTypeNotFoundException {
         accountCategoryService.deleteAccountCategory(id);
         return HttpStatus.OK;
     }

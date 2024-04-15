@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fz.ExpenseTracker.category.CategoryNotFoundException;
 import com.fz.ExpenseTracker.product.Product;
 import com.fz.ExpenseTracker.product.ProductNotFoundException;
 import com.fz.ExpenseTracker.product.ProductService;
@@ -27,7 +28,7 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) throws CategoryNotFoundException {
         productService.addProduct(product);
         return new ResponseEntity<Product>(new HttpHeaders(), HttpStatus.CREATED);
     }

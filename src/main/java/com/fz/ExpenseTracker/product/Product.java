@@ -1,10 +1,15 @@
 package com.fz.ExpenseTracker.product;
 
+import com.fz.ExpenseTracker.category.Category;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -19,8 +24,30 @@ public class Product {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "category")
-	private String category;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "category")
+	private Category category;
+	
+	
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Product(int id, String name, Category category) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.category = category;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public int getId() {
 		return id;
@@ -38,26 +65,9 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getCategory() {
-		return category;
-	}
+	
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public Product(int id, String name, String category) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.category = category;
-	}
-
-	public Product() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	
 }
 /*
  * Product - id - name - category

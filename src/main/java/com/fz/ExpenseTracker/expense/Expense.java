@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 
 import com.fz.ExpenseTracker.category.Category;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -21,7 +23,8 @@ public class Expense {
 	private String paid_account;
 	private String reference;
 	private String description;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "category")
 	private Category category;
 	
 	public Expense() {
