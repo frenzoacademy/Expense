@@ -71,6 +71,23 @@ public class SecurityConfig {
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+    
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http.csrf().disable().cors().and()
+//                .authorizeHttpRequests()
+//                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//                    .requestMatchers(HttpMethod.POST, "/accounts").hasAnyRole("ADMIN", "STAFF") // Allow POST to /accounts for ADMIN and STAFF roles
+//                    .anyRequest().permitAll() // Permit all other requests
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider())
+//                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
+//    }
+
+    
 
 
     

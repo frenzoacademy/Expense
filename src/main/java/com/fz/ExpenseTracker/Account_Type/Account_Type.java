@@ -14,7 +14,6 @@ public class Account_Type {
 	@SequenceGenerator(name = "account_category_generator")
 	@Column(name = "id")
 	private int id;
-	@Column(name = "")
 	private String name;
 
 	public Account_Type(int id, String name) {

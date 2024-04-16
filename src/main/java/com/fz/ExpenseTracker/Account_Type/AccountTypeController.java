@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/account-categories")
+@RequestMapping("/account_type")
 public class AccountTypeController {
 	
 	@Autowired

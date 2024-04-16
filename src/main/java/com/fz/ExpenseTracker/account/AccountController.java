@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class AccountController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Account> getAccountById(@PathVariable int id) {
+	public ResponseEntity<Account> getAccountById(@PathVariable int id) throws AccountNotFoundException {
 		Account account = accountService.getAccountById(id);
 		if (account != null) {
 			return new ResponseEntity<>(account, HttpStatus.OK);
@@ -38,7 +39,8 @@ public class AccountController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Account> addAccount(@RequestBody Account account) {
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
+	public ResponseEntity<Account> addAccount(@RequestBody AccountDTO account) {
 		Account createdAccount = accountService.addAccount(account);
 		return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
 	}
