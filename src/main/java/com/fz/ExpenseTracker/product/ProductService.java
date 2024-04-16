@@ -2,6 +2,8 @@ package com.fz.ExpenseTracker.product;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fz.ExpenseTracker.category.Category;
-import com.fz.ExpenseTracker.category.CategoryNotFoundException;
 import com.fz.ExpenseTracker.category.CategoryRepository;
+import com.fz.ExpenseTracker.expense.Expense;
+
 import com.fz.ExpenseTracker.expense.Expense;
 
 
@@ -18,6 +21,7 @@ import com.fz.ExpenseTracker.expense.Expense;
 public class ProductService {
 
 	@Autowired
+    private ProductRepository productRepository;
     private ProductRepository productRepository;
 
     @Autowired
