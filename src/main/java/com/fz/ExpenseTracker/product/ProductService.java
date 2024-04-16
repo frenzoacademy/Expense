@@ -2,6 +2,8 @@ package com.fz.ExpenseTracker.product;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,15 +14,32 @@ import com.fz.ExpenseTracker.category.Category;
 import com.fz.ExpenseTracker.category.CategoryRepository;
 import com.fz.ExpenseTracker.expense.Expense;
 
+import com.fz.ExpenseTracker.expense.Expense;
+
 
 @Service
 public class ProductService {
 
 	@Autowired
     private ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+	public Product addProduct(Product product) throws CategoryNotFoundException {
+		if (product.getCategory() != null) {
+			Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName()));
+			if (optionalCategory.isPresent()) {
+				Category category = optionalCategory.get();
+				product.setCategory(category);
+			} else {
+				throw new CategoryNotFoundException("Category with ID " + product.getCategory().getId() + " not found");
+			}
+		}
+		productRepository.save(product);
+		return product;
+	}
 
       
     
@@ -36,6 +55,7 @@ public class ProductService {
         }
         return listOfProducts;
     }
+
 
     public ProductResponseDTO getProductById(int id) throws ProductNotFoundException {
         Product product = productRepository.findById(id)

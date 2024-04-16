@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fz.ExpenseTracker.category.Category;
 
@@ -20,7 +21,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 
 @Entity
-public class Expense implements Serializable{
+public class Expense implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +32,15 @@ public class Expense implements Serializable{
 	private String reference;
 	private String description;
 
-	
-    private int category; // Keep category as an int for JSON mapping
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "category")
+//	private Category category;
+
+	private int category; // Keep category as an int for JSON mapping
 
 	@ManyToOne(fetch = FetchType.EAGER) // Lazy fetch to prevent unnecessary loading
-    @JsonIgnoreProperties({"services", "expenses"})
-	@JoinColumn(name = "category_id") 
+	@JsonIgnoreProperties({ "services", "expenses" })
+	@JoinColumn(name = "category_id")
 	private Category categoryEntity;
 
 	public Category getCategoryEntity() {
@@ -116,12 +120,10 @@ public class Expense implements Serializable{
 		this.category = category;
 	}
 
-
-
 	public void setCategoryEntity(Category categoryEntity) {
 		this.categoryEntity = categoryEntity;
 	}
-	
+
 //	public void addCategory(Category category) {
 //		this.category.add(category);
 //		category.getClass().add(this);
