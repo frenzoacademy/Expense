@@ -29,7 +29,6 @@ public class RolesService {
     public Roles updateRoles(int id, Roles RolesDetails) {
         Roles Roles = getRolesById(id);
         Roles.setRoles(RolesDetails.getRoles());
-        // You can update other properties of the Roles as needed
 
         return RolesRepository.save(Roles);
     }

@@ -1,19 +1,23 @@
 package com.fz.ExpenseTracker.product;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fz.ExpenseTracker.category.Category;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-public class Product {
+public class Product implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
@@ -24,29 +28,31 @@ public class Product {
 	@Column(name = "name")
 	private String name;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "category")
-	private Category category;
-	
-	
+//	@JsonIgnore
+	private int category;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+//	@JsonIgnoreProperties({ "services", "expenses" })
+	@JoinColumn(name = "category_id")
+	private Category categoryEntity;
+
 	public Product() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Product(int id, String name, Category category) {
-		super();
-		this.id = id;
-		this.name = name;
+	public Category getCategoryEntity() {
+		return categoryEntity;
+	}
+
+	public void setCategoryEntity(Category categoryEntity) {
+		this.categoryEntity = categoryEntity;
+	}
+
+	public void setCategory(int category) {
 		this.category = category;
 	}
-
-	public Category getCategory() {
+	public int getCategory() {
 		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	public int getId() {
@@ -65,9 +71,12 @@ public class Product {
 		this.name = name;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", categoryEntity=" + categoryEntity
+				+ "]";
+	}
 
-	
 }
 /*
  * Product - id - name - category

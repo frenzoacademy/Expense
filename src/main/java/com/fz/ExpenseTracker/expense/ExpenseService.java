@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.lang.reflect.Field;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,28 +32,33 @@ public class ExpenseService {
 			if(category.isPresent()) {
 				Category c=category.get();
 				e.setCategoryEntity(c);
-				System.out.println(",,,,,,,,,,,,"+c.getName());
+		
 			}
 			e.setDate_time(ex.getDate_time());
 			e.setDescription(ex.getDescription());
 			e.setPaid_account(ex.getPaid_account());
 			e.setReference(ex.getReference());
 			listOfExpenses.add(e);
-			System.out.println(e.getCategoryEntity()+"---------");
 		}
 		return listOfExpenses;
 	}
 
-    public Expense getExpenseById(int id) {
+    public Expense getExpenseById(int id) throws ExpenseNotFoundException {
         Optional<Expense> optionalExpense = expenseRepository.findById(id);
-        return optionalExpense.orElse(null);
+        if(optionalExpense.isPresent()) {
+        	Expense expense=optionalExpense.get();
+        	Optional<Category> c=categoryRepository.findById(expense.getCategory());
+        	if(c.isPresent()) {
+        		Category category=c.get();
+        		expense.setCategoryEntity(category);
+        	}
+        	return expense;
+        }
+        else {
+        	throw new ExpenseNotFoundException("The entered id :"+id +" is not present");
+        }
     }
 
-//    public Expense addExpense(Expense expense) {
-//    	LocalDateTime date=LocalDateTime.now();
-//    	expense.setDate_time(date);
-//        return expenseRepository.save(expense);
-//    }
     @Autowired
     CategoryRepository categoryRepository;
     
@@ -72,15 +78,41 @@ public class ExpenseService {
         expenseRepository.save(expense);
     }
 
+
     public Expense updateExpense(int id, Expense updatedExpense) throws ExpenseNotFoundException {
         Optional<Expense> optionalExpense = expenseRepository.findById(id);
         if (optionalExpense.isPresent()) {
-            updatedExpense.setId(id);
-            return expenseRepository.save(updatedExpense);
+            Expense expense = optionalExpense.get();
+
+            Field[] fields = Expense.class.getDeclaredFields();
+
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+
+                    if (field.getName().equals("id")) {
+                        continue;
+                    }
+
+                    Object updatedValue = field.get(updatedExpense);
+
+                    if (updatedValue != null) {
+                        field.set(expense, updatedValue);
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return expenseRepository.save(expense);
         } else {
-            throw new ExpenseNotFoundException("The entered id :"+id+" is not present");
+            throw new ExpenseNotFoundException("The entered id: " + id + " is not present");
         }
     }
+
+
+
+
 
     public boolean deleteExpense(int id) {
         Optional<Expense> optionalExpense = expenseRepository.findById(id);
