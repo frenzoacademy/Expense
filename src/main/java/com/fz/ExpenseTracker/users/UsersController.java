@@ -1,5 +1,8 @@
 package com.fz.ExpenseTracker.users;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+@RestController("/users")
+
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -21,6 +27,30 @@ public class UsersController {
 
 	@Autowired
 	public UsersRepository userrepository;
+
+
+//	@GetMapping
+//	public String loginUsers() {
+//		return "Login Successfully";
+//	}
+
+@PostMapping
+    public ResponseEntity<String> createUser(@RequestBody UsersDTO userDto) {
+		userservice.createUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created Your Account");
+    }
+	@GetMapping
+	public ResponseEntity<List<Users>> getUsers() {
+		List<Users> use = userservice.getAllUsers();
+
+		return new ResponseEntity<List<Users>>(use, HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Users> getusersbyId(@PathVariable("id") int id) {
+		Users use = userservice.getUserById(id);
+		return new ResponseEntity<Users>(use, HttpStatus.OK);
+	}
 
 	@PostMapping
     public ResponseEntity<String> createUser(@RequestBody UsersDTO userDto) {

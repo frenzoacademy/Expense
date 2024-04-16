@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fz.ExpenseTracker.category.Category;
+import com.fz.ExpenseTracker.category.CategoryNotFoundException;
 import com.fz.ExpenseTracker.category.CategoryRepository;
 import com.fz.ExpenseTracker.expense.Expense;
 
