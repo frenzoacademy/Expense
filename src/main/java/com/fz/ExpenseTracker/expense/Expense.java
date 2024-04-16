@@ -44,9 +44,11 @@ public class Expense implements Serializable {
 	private Category categoryEntity;
 
 	public Category getCategoryEntity() {
-		return categoryEntity;
-	}
-
+        return categoryEntity;
+    }
+	
+	
+	
 	public Expense() {
 		super();
 	}

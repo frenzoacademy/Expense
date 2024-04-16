@@ -12,9 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController("/users")
+
+
+@RestController
+@RequestMapping("/users")
 public class UsersController {
 	@Autowired
 	public UsersService userservice;
@@ -22,10 +28,17 @@ public class UsersController {
 	@Autowired
 	public UsersRepository userrepository;
 
+
 //	@GetMapping
 //	public String loginUsers() {
 //		return "Login Successfully";
 //	}
+
+@PostMapping
+    public ResponseEntity<String> createUser(@RequestBody UsersDTO userDto) {
+		userservice.createUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created Your Account");
+    }
 	@GetMapping
 	public ResponseEntity<List<Users>> getUsers() {
 		List<Users> use = userservice.getAllUsers();
@@ -38,6 +51,17 @@ public class UsersController {
 		Users use = userservice.getUserById(id);
 		return new ResponseEntity<Users>(use, HttpStatus.OK);
 	}
+
+	@PostMapping
+    public ResponseEntity<String> createUser(@RequestBody UsersDTO userDto) {
+		userservice.createUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created Your Account");
+    }
+
+//	@GetMapping
+//	public String loginUsers() {
+//		return "Login Successfully";
+//	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Users> updateUserDetails(@RequestBody Users users, @PathVariable int id) {

@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.fz.ExpenseTracker.role.Roles;
+import com.fz.ExpenseTracker.role.RolesRepository;
 
 @Service
 public class UsersService {
@@ -20,9 +24,22 @@ public class UsersService {
 		return optionalUser.orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found"));
 	}
 
-	public void createUser(Users user) {
-		userRepository.save(user);
-	}
+	@Autowired
+	RolesRepository rolesRepository;
+	@Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+	 public void createUser(UsersDTO userDto) {
+	        Users user = new Users();
+	        user.setFirstName(userDto.getFirstName());
+	        user.setLastName(userDto.getLastName());
+	        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+	        user.setMobile(userDto.getMobile());
+	        user.setEmail(userDto.getEmail());
+	        Roles role=rolesRepository.findByRoles(userDto.getRole());
+	        user.setRoleEntity(role);
+	        userRepository.save(user);
+	    }
 
 	public Users updateUser(int id, Users updatedUser) throws UserNotFoundException {
 		Optional<Users> optionalUser = userRepository.findById(id);

@@ -41,6 +41,15 @@ public class Roles {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+
+	public int[] split(String string) {
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "Roles [id=" + id + ", roles=" + roles + "]";
+	}
 	
 	
 }
