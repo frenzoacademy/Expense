@@ -21,8 +21,7 @@ public class ProductService {
 
 	public Product addProduct(Product product) throws CategoryNotFoundException {
 		if (product.getCategory() != null) {
-			Optional<Category> optionalCategory = Optional
-					.ofNullable(categoryrepository.findByName(product.getCategory().getName()));
+			Optional<Category> optionalCategory = Optional.ofNullable(categoryrepository.findByName(product.getCategory().getName()));
 			if (optionalCategory.isPresent()) {
 				Category category = optionalCategory.get();
 				product.setCategory(category);

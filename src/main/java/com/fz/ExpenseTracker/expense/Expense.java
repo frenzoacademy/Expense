@@ -29,11 +29,9 @@ public class Expense implements Serializable{
 	private String paid_account;
 	private String reference;
 	private String description;
-<<<<<<< HEAD
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "category")
-	private Category category;
-=======
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "category")
+//	private Category category;
 
 	
     private int category; // Keep category as an int for JSON mapping
@@ -50,7 +48,6 @@ public class Expense implements Serializable{
     }
 	
 	
->>>>>>> 56b37e5e2d042b63ff4283d15d88372b28742c4e
 	
 	public Expense() {
 		super();
