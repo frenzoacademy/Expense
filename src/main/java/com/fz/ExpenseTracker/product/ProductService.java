@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fz.ExpenseTracker.category.Category;
+import com.fz.ExpenseTracker.category.CategoryNotFoundException;
 import com.fz.ExpenseTracker.category.CategoryRepository;
 import com.fz.ExpenseTracker.expense.Expense;
 
@@ -22,10 +23,9 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-<<<<<<< HEAD
 	public Product addProduct(Product product) throws CategoryNotFoundException {
 		if (product.getCategory() != null) {
-			Optional<Category> optionalCategory = Optional.ofNullable(categoryrepository.findByName(product.getCategory().getName()));
+			Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName()));
 			if (optionalCategory.isPresent()) {
 				Category category = optionalCategory.get();
 				product.setCategory(category);
@@ -33,10 +33,10 @@ public class ProductService {
 				throw new CategoryNotFoundException("Category with ID " + product.getCategory().getId() + " not found");
 			}
 		}
-		productrepository.save(product);
+		productRepository.save(product);
 		return product;
 	}
-=======
+
       
     
     public List<ProductResponseDTO> getAllProducts() {
@@ -51,7 +51,7 @@ public class ProductService {
         }
         return listOfProducts;
     }
->>>>>>> 0b9145e81e6310d97caa3ccdb943f477caf8fa0a
+
 
     public ProductResponseDTO getProductById(int id) throws ProductNotFoundException {
         Product product = productRepository.findById(id)

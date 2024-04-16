@@ -20,7 +20,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 
 @Entity
-public class Expense implements Serializable{
+public class Expense implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,27 +30,22 @@ public class Expense implements Serializable{
 	private String paid_account;
 	private String reference;
 	private String description;
-<<<<<<< HEAD
+
 //	@OneToOne(cascade = CascadeType.ALL)
 //	@JoinColumn(name = "category")
 //	private Category category;
-=======
->>>>>>> 0b9145e81e6310d97caa3ccdb943f477caf8fa0a
 
-	
-    private int category; // Keep category as an int for JSON mapping
+	private int category; // Keep category as an int for JSON mapping
 
 	@ManyToOne(fetch = FetchType.EAGER) // Lazy fetch to prevent unnecessary loading
-    @JsonIgnoreProperties({"services", "expenses"})
-	@JoinColumn(name = "category_id") 
+	@JsonIgnoreProperties({ "services", "expenses" })
+	@JoinColumn(name = "category_id")
 	private Category categoryEntity;
 
 	public Category getCategoryEntity() {
-        return categoryEntity;
-    }
-	
-	
-	
+		return categoryEntity;
+	}
+
 	public Expense() {
 		super();
 	}
@@ -122,12 +117,10 @@ public class Expense implements Serializable{
 		this.category = category;
 	}
 
-
-
 	public void setCategoryEntity(Category categoryEntity) {
 		this.categoryEntity = categoryEntity;
 	}
-	
+
 //	public void addCategory(Category category) {
 //		this.category.add(category);
 //		category.getClass().add(this);
