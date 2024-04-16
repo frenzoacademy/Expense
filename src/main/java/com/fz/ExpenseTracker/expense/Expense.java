@@ -44,7 +44,6 @@ public class Expense implements Serializable{
     }
 	
 	
->>>>>>> 56b37e5e2d042b63ff4283d15d88372b28742c4e
 	
 	public Expense() {
 		super();

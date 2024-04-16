@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController("/users")
+@RestController
+@RequestMapping("/users")
 public class UsersController {
 	@Autowired
 	public UsersService userservice;
@@ -21,20 +23,20 @@ public class UsersController {
 	public UsersRepository userrepository;
 
 	@PostMapping
-	public String createUser(@RequestBody User users) {
-		userservice.createUser(users);
-		return "Sucessfully Created Your Account";
-	}
+    public ResponseEntity<String> createUser(@RequestBody UsersDTO userDto) {
+		userservice.createUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created Your Account");
+    }
 
-	@GetMapping
-	public String loginUsers() {
-		return "Login Successfully";
-	}
+//	@GetMapping
+//	public String loginUsers() {
+//		return "Login Successfully";
+//	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<User> updateUserDetails(@RequestBody User users, @PathVariable int id) {
+	public ResponseEntity<Users> updateUserDetails(@RequestBody Users users, @PathVariable int id) {
 		userservice.updateUser(id, users);
-		return new ResponseEntity<User>(HttpStatus.CREATED);
+		return new ResponseEntity<Users>(HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")
