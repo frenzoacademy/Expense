@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fz.ExpenseTracker.category.Category;
+import com.fz.ExpenseTracker.category.CategoryNotFoundException;
 import com.fz.ExpenseTracker.category.CategoryRepository;
 import com.fz.ExpenseTracker.expense.Expense;
 
@@ -22,23 +23,23 @@ public class ProductService {
 
 	@Autowired
     private ProductRepository productRepository;
-    private ProductRepository productRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
 	public Product addProduct(Product product) throws CategoryNotFoundException {
-		if (product.getCategory() != null) {
-			Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName()));
-			if (optionalCategory.isPresent()) {
-				Category category = optionalCategory.get();
-				product.setCategory(category);
-			} else {
-				throw new CategoryNotFoundException("Category with ID " + product.getCategory().getId() + " not found");
-			}
-		}
-		productRepository.save(product);
-		return product;
+//		if (product.getCategory() != null) {
+//			Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findByName(product.getCategory().getName()));
+//			if (optionalCategory.isPresent()) {
+//				Category category = optionalCategory.get();
+//				product.setCategory(category);
+//			} else {
+//				throw new CategoryNotFoundException("Category with ID " + product.getCategory().getId() + " not found");
+//			}
+//		}
+//		productRepository.save(product);
+//		return product;
+		return null;
 	}
 
       
