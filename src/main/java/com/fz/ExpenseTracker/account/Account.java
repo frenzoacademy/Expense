@@ -73,6 +73,11 @@ public class Account {
 	public void setAccountEntity(Account_Type accountEntity) {
 		this.accountEntity = accountEntity;
 	}
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", name=" + name + ", upi_id=" + upi_id + ", account_number=" + account_number
+				+ ", amount=" + amount  + "]";
+	}
 	
 	
 	

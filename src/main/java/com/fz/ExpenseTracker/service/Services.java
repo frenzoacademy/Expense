@@ -57,7 +57,7 @@ public class Services {
 	}
 	@Override
 	public String toString() {
-		return "Services [id=" + id + ", name=" + name + ", category=" + category + "]";
+		return "Services [id=" + id + ", name=" + name + "]";
 	}
 	
 	

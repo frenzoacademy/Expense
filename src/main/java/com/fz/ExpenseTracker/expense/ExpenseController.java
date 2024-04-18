@@ -45,7 +45,7 @@ public class ExpenseController {
 	    
 	    @PostMapping
 	    @Transactional
-	    public ResponseEntity<?> createExpense(@RequestBody ExpenseDto expense) {
+	    public ResponseEntity<?> createExpense(@RequestBody ExpenseDTO expense) {
 	    	expenseService.createExpense(expense);
 	        return new ResponseEntity<>(HttpStatus.CREATED);
 	    }

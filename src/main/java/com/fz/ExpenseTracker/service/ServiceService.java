@@ -18,28 +18,30 @@ public class ServiceService {
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	public Services createService(Services service) {
-	    Optional<Category> existingCategory =categoryRepository.findByName(service.getCategory().getName());
+	public Services createService(ServiceDTO service) {
+		Services s=new Services();
+	    Optional<Category> existingCategory =categoryRepository.findById(service.getCategory());
 	    if(existingCategory.isPresent()) {
 	    	Category category=existingCategory.get();
-	    	service.setCategory(category);
+	    	s.setCategory(category);
 	    }
-	    return serviceRepository.save(service);
+	    s.setName(service.getName());
+	    return serviceRepository.save(s);
 	}
 
-		public List<ServiceDTO> getAllServices() {
+		public List<Services> getAllServices() {
 	        List<Services> servicesList = serviceRepository.findAll();
 	        List<ServiceDTO> serviceDTOList = new ArrayList<>();
 
-	        for (Services service : servicesList) {
-	            ServiceDTO serviceDTO = new ServiceDTO();
-	            serviceDTO.setId(service.getId());
-	            serviceDTO.setName(service.getName());
-	            serviceDTO.setCategoryName(service.getCategory().getName()); 
-	            serviceDTOList.add(serviceDTO);
-	        }
+//	        for (Services service : servicesList) {
+//	            ServiceDTO serviceDTO = new ServiceDTO();
+//	            serviceDTO.setId(service.getId());
+//	            serviceDTO.setName(service.getName());
+//	            serviceDTO.setCategoryName(service.getCategory().getName()); 
+//	            serviceDTOList.add(serviceDTO);
+//	        }
 
-	        return serviceDTOList;
+	        return servicesList;
 	    }
 
 	public Optional<Services> getServiceById(int id) {

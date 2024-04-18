@@ -42,4 +42,9 @@ public class Account_Type {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Account_Type [id=" + id + ", name=" + name + "]";
+	}
+
 }

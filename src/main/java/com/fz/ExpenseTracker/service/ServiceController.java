@@ -23,14 +23,14 @@ public class ServiceController {
 	ServiceService services;
 
 	@PostMapping
-	public ResponseEntity<String> createService(@RequestBody Services service) {
+	public ResponseEntity<String> createService(@RequestBody ServiceDTO service) {
 		Services createdService = services.createService(service);
         return ResponseEntity.status(HttpStatus.CREATED).body("Services created successfully");
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ServiceDTO>> getAllServices() throws ServiceNotFoundException {
-	    List<ServiceDTO> serviceDTOList = services.getAllServices();
+	public ResponseEntity<List<Services>> getAllServices() throws ServiceNotFoundException {
+	    List<Services> serviceDTOList = services.getAllServices();
 	    return new ResponseEntity<>(serviceDTOList, HttpStatus.OK);
 	}
 
@@ -53,7 +53,8 @@ public class ServiceController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteService(@PathVariable int id) {
-		services.deleteService(id);
-        return (ResponseEntity<HttpStatus>) ResponseEntity.status(HttpStatus.OK);
+	    services.deleteService(id);
+	    return ResponseEntity.status(HttpStatus.OK).build();
 	}
+
 }

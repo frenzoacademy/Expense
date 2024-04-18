@@ -6,7 +6,7 @@ public class AccountDTO {
 	private String upi_id;
 	private String account_number;
 	private int amount;
-	private String account_type;
+	private int account_type;
 	
 	public int getId() {
 		return id;
@@ -38,10 +38,10 @@ public class AccountDTO {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public String getAccount_type() {
+	public int getAccount_type() {
 		return account_type;
 	}
-	public void setAccount_type(String account_type) {
+	public void setAccount_type(int account_type) {
 		this.account_type = account_type;
 	}
 	

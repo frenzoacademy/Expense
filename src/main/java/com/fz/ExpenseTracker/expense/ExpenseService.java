@@ -39,13 +39,13 @@ public class ExpenseService {
 //				e.setCategoryEntity(c);
 //		
 //			}
-			e.setDate_time(ex.getDate_time());
-			e.setDescription(ex.getDescription());
-			e.setPaid_account(ex.getPaid_account());
-			e.setReference(ex.getReference());
-			listOfExpenses.add(e);
+//			e.setDate_time(ex.getDate_time());
+//			e.setDescription(ex.getDescription());
+//			e.setPaid_account(ex.getPaid_account());
+//			e.setReference(ex.getReference());
+//			listOfExpenses.add(e);
 		}
-		return listOfExpenses;
+		return expenses;
 	}
 
     public Expense getExpenseById(int id) throws ExpenseNotFoundException {
@@ -92,12 +92,40 @@ public class ExpenseService {
     @Autowired
     ServiceRepository serviceRepo;
     
-    public void createExpense(ExpenseDto expenseRequest) {
+    public void createExpense(ExpenseDTO expenseRequest) {
+    	Expense expense=new Expense();
     	Optional<Category> c=categoryRepository.findById(expenseRequest.getCategory());
-    	Optional<Account_Type> ac=accountTypeRepo.findById(expenseRequest.getAccount_type());
-    	Optional<Account> a=accountRepo.findById(expenseRequest.getAccount_details());
     	Optional<Services> s=serviceRepo.findById(expenseRequest.getService());
+    	Optional<Account_Type> ac=accountTypeRepo.findById(expenseRequest.getAccount_type());
+    	Optional<Account> a=accountRepo.findById(expenseRequest.getPaid_account());
+    	if(c.isPresent()) {
+    		Category category=c.get();
+    		expense.setCategoryEntity(category);
+    		if(s.isPresent()) {
+    			Services service=s.get();
+    			expense.setServiceEntity(service);
+    		}
+    	}
+    	if(ac.isPresent()) {
+    		Account_Type accountType=ac.get();
+    		expense.setAccountTypeEntity(accountType);
+    		if(a.isPresent()) {
+    			Account account=a.get();
+    			if(expenseRequest.getAmount()<=account.getAmount()) {
+    				account.setAmount(account.getAmount()-expenseRequest.getAmount());
+    				accountRepo.save(account);
+    				expense.setAccount(account);
+    			}
+    		}	
+    	}
     	
+    	expense.setAmount(expenseRequest.getAmount());
+    	expense.setDate_time(LocalDateTime.now());
+    	expense.setDescription(expenseRequest.getDescription());
+    	expense.setReference(expenseRequest.getReference());
+    	expense.setVendorGst(expenseRequest.getVendorGst());
+    	expense.setVendorName(expenseRequest.getVendorName());
+    	expenseRepository.save(expense);
     }
 
 

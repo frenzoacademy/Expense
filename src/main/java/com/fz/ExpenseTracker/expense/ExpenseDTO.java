@@ -2,23 +2,22 @@ package com.fz.ExpenseTracker.expense;
 
 import java.time.LocalDateTime;
 
-public class ExpenseDto {
+public class ExpenseDTO {
 
 	private int id;
 	private LocalDateTime date_time;
 	private int amount;
-	private String paid_account;
 	private String reference;
 	private String description;
 	private String vendorName;
 	private String vendorGst;
+	
 	private int service;
-
+	private int paid_account;
 	private int account_type;
-	private int account_details;
 	private int category;
 	
-	public ExpenseDto() {
+	public ExpenseDTO() {
 		super();
 	}
 
@@ -46,11 +45,11 @@ public class ExpenseDto {
 		this.amount = amount;
 	}
 
-	public String getPaid_account() {
+	public int getPaid_account() {
 		return paid_account;
 	}
 
-	public void setPaid_account(String paid_account) {
+	public void setPaid_account(int paid_account) {
 		this.paid_account = paid_account;
 	}
 
@@ -102,13 +101,7 @@ public class ExpenseDto {
 		this.account_type = account_type;
 	}
 
-	public int getAccount_details() {
-		return account_details;
-	}
-
-	public void setAccount_details(int account_details) {
-		this.account_details = account_details;
-	}
+	
 
 	public int getCategory() {
 		return category;

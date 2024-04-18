@@ -25,9 +25,10 @@ public class Category {
 	@JsonIgnore
     private List<Services> services;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category", orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryEntity", orphanRemoval = true)
 	@JsonIgnore
 	private List<Expense> expenses;
+
 
 	
 	public Category() {

@@ -47,6 +47,8 @@ public class SecurityConfig {
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable().cors().and().authorizeHttpRequests()
+//				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//                .requestMatchers(HttpMethod.GET,"/swagger-ui/**","/v3/api-docs/**").permitAll()//http://localhost:8080/swagger-ui/index.html#/
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 //				.requestMatchers(HttpMethod.POST, "/login").permitAll()
 				.anyRequest().permitAll()

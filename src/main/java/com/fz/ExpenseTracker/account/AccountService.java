@@ -56,7 +56,7 @@ public class AccountService {
 	AccountTypeReporitory accountTypeRepo;
 	
 	public Account addAccount(AccountDTO account) {
-	    Optional<Account_Type> accountType =accountTypeRepo.findByName(account.getAccount_type());
+	    Optional<Account_Type> accountType =accountTypeRepo.findById(account.getAccount_type());
 	    Account acc=new Account();
 	    if(accountType.isPresent()) {
 	    	Account_Type a=accountType.get();

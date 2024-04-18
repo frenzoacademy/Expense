@@ -3,7 +3,7 @@ package com.fz.ExpenseTracker.service;
 public class ServiceDTO {
 	private int id;
     private String name;
-    private String categoryName;
+    private int category;
 	public int getId() {
 		return id;
 	}
@@ -16,11 +16,11 @@ public class ServiceDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getCategoryName() {
-		return categoryName;
+	public int getCategory() {
+		return category;
 	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setCategory(int categoryName) {
+		this.category = categoryName;
 	}
     
 }

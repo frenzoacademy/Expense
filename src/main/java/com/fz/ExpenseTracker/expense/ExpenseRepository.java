@@ -11,9 +11,9 @@ import com.fz.ExpenseTracker.category.Category;
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Integer>{
 
-	Expense findByCategory(Category category);
+    Expense findByCategoryEntity(Category category);
 
-	void save(ExpenseDto expense);
+	void save(ExpenseDTO expense);
     List<Expense> findAll();
 
 }
