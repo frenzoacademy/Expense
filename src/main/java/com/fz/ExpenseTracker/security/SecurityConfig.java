@@ -1,4 +1,4 @@
-package com.fz.ExpenseTracker.config;
+package com.fz.ExpenseTracker.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,6 +35,7 @@ import com.fz.ExpenseTracker.dto.filter.JwtAuthFilter;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
@@ -42,55 +44,34 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return new UserInfoUserDetailsService();
     } 
-    
-    /*@Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable().cors().and()
-                .authorizeHttpRequests()
-                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                    .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/users").permitAll() // Permit POST requests to /users endpoint
-                    .anyRequest().authenticated() // All other requests require authentication
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }*/
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable().cors().and()
-                .authorizeHttpRequests()
-                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                    .requestMatchers("/**").permitAll() // Allow all requests
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
-    
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf().disable().cors().and()
-//                .authorizeHttpRequests()
-//                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-//                    .requestMatchers(HttpMethod.POST, "/accounts").hasAnyRole("ADMIN", "STAFF") // Allow POST to /accounts for ADMIN and STAFF roles
-//                    .anyRequest().permitAll() // Permit all other requests
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authenticationProvider(authenticationProvider())
-//                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-//                .build();
-//    }
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http.csrf().disable().cors().and().authorizeHttpRequests()
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//				.requestMatchers(HttpMethod.POST, "/login").permitAll()
+				.anyRequest().permitAll()
 
+																								// authentication for
+																								// POST
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.authenticationProvider(authenticationProvider())
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
     
+   /* protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+            .cors()
+            .and()
+            .authorizeRequests()
+                .requestMatchers(HttpMethod.GET, "/accounts/**").access("hasAuthority('ADMIN')") // Requires ADMIN authority
+                .requestMatchers(HttpMethod.POST, "/accounts/**").access("hasAuthority('ADMIN') or hasAuthority('USER')") // Requires ADMIN or USER authority
+                .anyRequest().permitAll() 
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+    }*/
 
-
-    
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

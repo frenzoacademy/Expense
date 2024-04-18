@@ -13,8 +13,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fz.ExpenseTracker.config.JwtService;
-import com.fz.ExpenseTracker.config.UserInfoUserDetailsService;
+import com.fz.ExpenseTracker.security.JwtService;
+import com.fz.ExpenseTracker.security.UserInfoUserDetailsService;
 
 import java.io.IOException;
 

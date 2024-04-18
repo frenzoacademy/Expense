@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController("/users")
 
 
 @RestController
@@ -34,11 +33,7 @@ public class UsersController {
 //		return "Login Successfully";
 //	}
 
-@PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UsersDTO userDto) {
-		userservice.createUser(userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created Your Account");
-    }
+
 	@GetMapping
 	public ResponseEntity<List<Users>> getUsers() {
 		List<Users> use = userservice.getAllUsers();

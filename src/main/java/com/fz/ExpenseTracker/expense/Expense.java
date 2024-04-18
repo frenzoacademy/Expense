@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fz.ExpenseTracker.Account_Type.Account_Type;
+import com.fz.ExpenseTracker.account.Account;
 import com.fz.ExpenseTracker.category.Category;
+import com.fz.ExpenseTracker.service.Services;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -31,24 +34,36 @@ public class Expense implements Serializable {
 	private String paid_account;
 	private String reference;
 	private String description;
+	private String vendorName;
+	private String vendorGst;
+	
+	private int service;
+	private int account_type;
+	private int account_details;
+	private int category;
 
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "category")
-//	private Category category;
-
-	private int category; // Keep category as an int for JSON mapping
-
-	@ManyToOne(fetch = FetchType.EAGER) // Lazy fetch to prevent unnecessary loading
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({ "services", "expenses" })
 	@JoinColumn(name = "category_id")
 	private Category categoryEntity;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("expenses")
+	@JoinColumn(name = "service_id")
+	private Services serviceEntity;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "account_id")
+	private Account account;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "account_type_id")
+	private Account_Type accountTypeEntity;
+
 	public Category getCategoryEntity() {
-        return categoryEntity;
-    }
-	
-	
-	
+		return categoryEntity;
+	}
+
 	public Expense() {
 		super();
 	}
@@ -122,6 +137,70 @@ public class Expense implements Serializable {
 
 	public void setCategoryEntity(Category categoryEntity) {
 		this.categoryEntity = categoryEntity;
+	}
+
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
+
+	public String getVendorGst() {
+		return vendorGst;
+	}
+
+	public void setVendorGst(String vendorGst) {
+		this.vendorGst = vendorGst;
+	}
+
+	public int getService() {
+		return service;
+	}
+
+	public void setService(int service) {
+		this.service = service;
+	}
+
+	public Services getServiceEntity() {
+		return serviceEntity;
+	}
+
+	public void setServiceEntity(Services serviceEntity) {
+		this.serviceEntity = serviceEntity;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public Account_Type getAccountTypeEntity() {
+		return accountTypeEntity;
+	}
+
+	public void setAccountTypeEntity(Account_Type accountTypeEntity) {
+		this.accountTypeEntity = accountTypeEntity;
+	}
+
+	public int getAccount_type() {
+		return account_type;
+	}
+
+	public void setAccount_type(int account_type) {
+		this.account_type = account_type;
+	}
+
+	public int getAccount_details() {
+		return account_details;
+	}
+
+	public void setAccount_details(int account_details) {
+		this.account_details = account_details;
 	}
 
 //	public void addCategory(Category category) {

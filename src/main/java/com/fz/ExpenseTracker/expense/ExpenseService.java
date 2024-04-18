@@ -9,9 +9,14 @@ import java.lang.reflect.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fz.ExpenseTracker.Account_Type.AccountTypeReporitory;
+import com.fz.ExpenseTracker.Account_Type.Account_Type;
+import com.fz.ExpenseTracker.account.Account;
+import com.fz.ExpenseTracker.account.AccountRepository;
 import com.fz.ExpenseTracker.category.Category;
 import com.fz.ExpenseTracker.category.CategoryRepository;
 import com.fz.ExpenseTracker.service.ServiceDTO;
+import com.fz.ExpenseTracker.service.ServiceRepository;
 import com.fz.ExpenseTracker.service.Services;
 @Service
 public class ExpenseService {
@@ -28,12 +33,12 @@ public class ExpenseService {
 			Expense e=new Expense();
 			e.setId(ex.getId());
 			e.setAmount(ex.getAmount());
-			Optional<Category> category=categoryRepository.findById(ex.getCategory());
-			if(category.isPresent()) {
-				Category c=category.get();
-				e.setCategoryEntity(c);
-		
-			}
+//			Optional<Category> category=categoryRepository.findById(ex.getCategory());
+//			if(category.isPresent()) {
+//				Category c=category.get();
+//				e.setCategoryEntity(c);
+//		
+//			}
 			e.setDate_time(ex.getDate_time());
 			e.setDescription(ex.getDescription());
 			e.setPaid_account(ex.getPaid_account());
@@ -47,11 +52,11 @@ public class ExpenseService {
         Optional<Expense> optionalExpense = expenseRepository.findById(id);
         if(optionalExpense.isPresent()) {
         	Expense expense=optionalExpense.get();
-        	Optional<Category> c=categoryRepository.findById(expense.getCategory());
-        	if(c.isPresent()) {
-        		Category category=c.get();
-        		expense.setCategoryEntity(category);
-        	}
+//        	Optional<Category> c=categoryRepository.findById(expense.getCategory());
+//        	if(c.isPresent()) {
+//        		Category category=c.get();
+//        		expense.setCategoryEntity(category);
+//        	}
         	return expense;
         }
         else {
@@ -59,23 +64,40 @@ public class ExpenseService {
         }
     }
 
+     
+//    public void createExpense(ExpenseDto expenseRequest) {
+//        Category category = categoryRepository.findById(expenseRequest.getCategory())
+//                .orElseThrow();
+//
+//        Expense expense = new Expense();
+//        expense.setAmount(expenseRequest.getAmount());
+//        expense.setDate_time(LocalDateTime.now()); 
+//        expense.setPaid_account(expenseRequest.getPaid_account());
+//        expense.setReference(expenseRequest.getReference());
+//        expense.setDescription(expenseRequest.getDescription());
+//        
+////        expense.setCategory(category.getId());
+//        
+//        expenseRepository.save(expense);
+//    }
+    
     @Autowired
     CategoryRepository categoryRepository;
+   
+    @Autowired
+    AccountTypeReporitory accountTypeRepo;
     
-    public void createExpense(Expense expenseRequest) {
-        Category category = categoryRepository.findById(expenseRequest.getCategory())
-                .orElseThrow();
-
-        Expense expense = new Expense();
-        expense.setAmount(expenseRequest.getAmount());
-        expense.setDate_time(LocalDateTime.now()); 
-        expense.setPaid_account(expenseRequest.getPaid_account());
-        expense.setReference(expenseRequest.getReference());
-        expense.setDescription(expenseRequest.getDescription());
-        
-        expense.setCategory(category.getId());
-        
-        expenseRepository.save(expense);
+    @Autowired
+    AccountRepository accountRepo;
+    @Autowired
+    ServiceRepository serviceRepo;
+    
+    public void createExpense(ExpenseDto expenseRequest) {
+    	Optional<Category> c=categoryRepository.findById(expenseRequest.getCategory());
+    	Optional<Account_Type> ac=accountTypeRepo.findById(expenseRequest.getAccount_type());
+    	Optional<Account> a=accountRepo.findById(expenseRequest.getAccount_details());
+    	Optional<Services> s=serviceRepo.findById(expenseRequest.getService());
+    	
     }
 
 

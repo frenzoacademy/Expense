@@ -1,4 +1,4 @@
-package com.fz.ExpenseTracker.config;
+package com.fz.ExpenseTracker.security;
 
 
 	import org.springframework.beans.factory.annotation.Autowired;

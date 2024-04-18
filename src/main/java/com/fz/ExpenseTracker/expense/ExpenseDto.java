@@ -5,29 +5,22 @@ import java.time.LocalDateTime;
 public class ExpenseDto {
 
 	private int id;
-	private LocalDateTime dateTime;
+	private LocalDateTime date_time;
 	private int amount;
-	private String paidAccount;
+	private String paid_account;
 	private String reference;
 	private String description;
-	private int category;
+	private String vendorName;
+	private String vendorGst;
+	private int service;
 
+	private int account_type;
+	private int account_details;
+	private int category;
 	
 	public ExpenseDto() {
 		super();
 	}
-
-	public ExpenseDto(Expense expense) {
-	        this.id = expense.getId();
-	        this.dateTime = expense.getDate_time();
-	        this.amount = expense.getAmount();
-	        this.paidAccount = expense.getPaid_account();
-	        this.reference = expense.getReference();
-	        this.description = expense.getDescription();
-//	        if (expense.getCategory() != null) {
-//	            this.categoryId = expense.getCategory().getId();
-//	        }
-	    }
 
 	public int getId() {
 		return id;
@@ -37,12 +30,12 @@ public class ExpenseDto {
 		this.id = id;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public LocalDateTime getDate_time() {
+		return date_time;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public void setDate_time(LocalDateTime date_time) {
+		this.date_time = date_time;
 	}
 
 	public int getAmount() {
@@ -53,12 +46,12 @@ public class ExpenseDto {
 		this.amount = amount;
 	}
 
-	public String getPaidAccount() {
-		return paidAccount;
+	public String getPaid_account() {
+		return paid_account;
 	}
 
-	public void setPaidAccount(String paidAccount) {
-		this.paidAccount = paidAccount;
+	public void setPaid_account(String paid_account) {
+		this.paid_account = paid_account;
 	}
 
 	public String getReference() {
@@ -77,6 +70,46 @@ public class ExpenseDto {
 		this.description = description;
 	}
 
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
+
+	public String getVendorGst() {
+		return vendorGst;
+	}
+
+	public void setVendorGst(String vendorGst) {
+		this.vendorGst = vendorGst;
+	}
+
+	public int getService() {
+		return service;
+	}
+
+	public void setService(int service) {
+		this.service = service;
+	}
+
+	public int getAccount_type() {
+		return account_type;
+	}
+
+	public void setAccount_type(int account_type) {
+		this.account_type = account_type;
+	}
+
+	public int getAccount_details() {
+		return account_details;
+	}
+
+	public void setAccount_details(int account_details) {
+		this.account_details = account_details;
+	}
+
 	public int getCategory() {
 		return category;
 	}
@@ -84,4 +117,5 @@ public class ExpenseDto {
 	public void setCategory(int category) {
 		this.category = category;
 	}
+	
 }

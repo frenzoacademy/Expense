@@ -1,4 +1,4 @@
-package com.fz.ExpenseTracker.config;
+package com.fz.ExpenseTracker.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
