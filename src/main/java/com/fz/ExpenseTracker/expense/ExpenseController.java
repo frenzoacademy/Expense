@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,12 +29,14 @@ public class ExpenseController {
 	    private ExpenseService expenseService;
 
 	    @GetMapping
+	    @PreAuthorize("hasAuthority('ADMIN')")
 	    public ResponseEntity<List<Expense>> getAllExpenses() {
 	        List<Expense> expenses = expenseService.getAllExpenses();
 	        return new ResponseEntity<>(expenses, HttpStatus.OK);
 	    }
 
 	    @GetMapping("/{id}")
+	    @PreAuthorize("hasAuthority('ADMIN')")
 	    public ResponseEntity<Expense> getExpenseById(@PathVariable int id) throws ExpenseNotFoundException {
 	        Expense expense = expenseService.getExpenseById(id);
 	        if (expense != null) {
@@ -44,6 +47,7 @@ public class ExpenseController {
 	    }
 	    
 	    @PostMapping
+	    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('STAFF')")
 	    @Transactional
 	    public ResponseEntity<?> createExpense(@RequestBody ExpenseDTO expense) {
 	    	expenseService.createExpense(expense);
@@ -61,6 +65,7 @@ public class ExpenseController {
 		}
 
 	    @DeleteMapping("/{id}")
+	    @PreAuthorize("hasAuthority('ADMIN')")
 	    public ResponseEntity<HttpStatus> deleteExpense(@PathVariable int id) {
 	        boolean deleted = expenseService.deleteExpense(id);
 	        if (deleted) {

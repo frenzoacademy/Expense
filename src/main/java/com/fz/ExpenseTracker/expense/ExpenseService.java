@@ -33,6 +33,7 @@ public class ExpenseService {
 			Expense e=new Expense();
 			e.setId(ex.getId());
 			e.setAmount(ex.getAmount());
+			e.setDate_time(ex.getDate_time());
 //			Optional<Category> category=categoryRepository.findById(ex.getCategory());
 //			if(category.isPresent()) {
 //				Category c=category.get();

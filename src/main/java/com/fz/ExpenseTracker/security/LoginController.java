@@ -44,6 +44,7 @@ public class LoginController {
             String email = authRequest.getEmail();
             Users user = getUserByEmail(email);
 
+            System.out.println(authRequest.getEmail());
             if (authentication.isAuthenticated() && user != null) {
                 String role = user.getRoleEntity().getRoles(); 
 

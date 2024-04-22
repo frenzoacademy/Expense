@@ -44,7 +44,9 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return new UserInfoUserDetailsService();
     } 
-    @Bean
+   
+    
+    /*@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable().cors().and().authorizeHttpRequests()
 //				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
@@ -58,7 +60,27 @@ public class SecurityConfig {
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();
-	}
+	}*/
+    
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf().disable()
+                .cors().and()
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers(HttpMethod.POST, "/expenses").hasAnyAuthority("ADMIN", "STAFF")
+                                .requestMatchers(HttpMethod.PUT, "/expenses/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/expenses/**").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/expenses/**").hasAuthority("ADMIN")
+                                .anyRequest().permitAll()
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
     
    /* protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
