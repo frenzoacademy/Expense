@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountTypeService {
 	@Autowired
-	AccountTypeReporitory accountcategoryrepository;
+	AccountTypeRepository accountcategoryrepository;
 
 	public Account_Type addAccountCategory(Account_Type accountCategory) {
 		Account_Type ac = accountcategoryrepository.save(accountCategory);

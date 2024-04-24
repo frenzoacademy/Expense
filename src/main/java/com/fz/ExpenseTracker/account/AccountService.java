@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fz.ExpenseTracker.Account_Type.AccountTypeReporitory;
+import com.fz.ExpenseTracker.Account_Type.AccountTypeRepository;
 import com.fz.ExpenseTracker.Account_Type.Account_Type;
 import com.fz.ExpenseTracker.category.Category;
 import com.fz.ExpenseTracker.service.Services;
@@ -53,7 +53,7 @@ public class AccountService {
         }
     }
 	@Autowired
-	AccountTypeReporitory accountTypeRepo;
+	AccountTypeRepository accountTypeRepo;
 	
 	public Account addAccount(AccountDTO account) {
 	    Optional<Account_Type> accountType =accountTypeRepo.findById(account.getAccount_type());

@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fz.ExpenseTracker.Account_Type.AccountTypeReporitory;
+import com.fz.ExpenseTracker.Account_Type.AccountTypeRepository;
 import com.fz.ExpenseTracker.Account_Type.Account_Type;
 import com.fz.ExpenseTracker.account.Account;
 import com.fz.ExpenseTracker.account.AccountRepository;
@@ -86,7 +86,7 @@ public class ExpenseService {
     CategoryRepository categoryRepository;
    
     @Autowired
-    AccountTypeReporitory accountTypeRepo;
+    AccountTypeRepository accountTypeRepo;
     
     @Autowired
     AccountRepository accountRepo;

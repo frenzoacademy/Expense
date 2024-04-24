@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fz.ExpenseTracker.Account_Type.AccountTypeReporitory;
+import com.fz.ExpenseTracker.Account_Type.AccountTypeRepository;
 import com.fz.ExpenseTracker.Account_Type.Account_Type;
 import com.fz.ExpenseTracker.account.Account;
 import com.fz.ExpenseTracker.account.AccountRepository;
@@ -26,7 +26,7 @@ public class IncomeService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private AccountTypeReporitory accountTypeRepo;
+    private AccountTypeRepository accountTypeRepo;
 
     @Autowired
     private AccountRepository accountRepo;
@@ -37,6 +37,7 @@ public class IncomeService {
     public List<Income> getAllIncomes() {
         return incomeRepository.findAll();
     }
+    
 
     public Income getIncomeById(int id) throws IncomeNotFoundException {
         Optional<Income> optionalExpense = incomeRepository.findById(id);
